@@ -56,10 +56,9 @@
 		  font-family:'Futura';
 		}
 
-	.focus cirlce {
-		fill:none;
-		stroke:steelblue;
-	}
+	.nodes {fill:white;}
+	.nodes:hover {fill:magenta;
+				  transition-duration:.3s;}
 
 </style>
 
@@ -79,20 +78,27 @@
 
 				[{x:1913,y:6,c:"Psych Time",
 				  title:"Karl Jaspers Psychopathologie"},
+
 				 {x:1923,y:6,c:"Psych Time",
-				  title:"Pierre Janets Medicine Psychology"},
+				  title:"Janets Medicine Psychology"},
 
 				 {x:1893,y:1,c:"Currency Time",
 				  title:"Henry Olerich Cityless World"},
+
 				 {x:1890,y:4,c:"Currency Time",
 				  title:"Time Stamp Machine"},
 
 				 {x:1905,y:5,c:"Time is Relative",
 				  title:"Einsteins Relativity"},
+
 				 {x:1922,y:1,c:"Time is Relative",
 				  title:"James Joyce Ulysses"},
+
 				 {x:1883,y:5,c:"Time is Relative",
 				  title:"Ernst Mach"},
+
+				 {x:1909,y:2,c:"The Past",
+				  title:"Filippo Marinetti"}
 
 
 
@@ -100,10 +106,14 @@
 				 
 		var concepts = 
 
-				[{x1:1913, y1:6,x2:1923,y2:6, c:"Psych Time"},
+				[
+				{x1:1913, y1:6,x2:1923,y2:6, c:"Psych Time"},
 				{x1:1893, y1:1,x2:1890,y2:4, c:"Currency Time"},
 				{x1:1905, y1:5,x2:1922,y2:1, c:"Time Relative"},
-				{x1:1883, y1:5,x2:1905,y2:5, c:"Time Relative"}	]
+				{x1:1883, y1:5,x2:1905,y2:5, c:"Time Relative"},
+				{x1:1909, y1:2,x2:1922,y2:1, c:"The Past"}	
+
+				]
 		
 		var width = 900
 		var height = 650
@@ -148,6 +158,8 @@
 						.attr("stroke-dasharray","5,1")
 						.attr("class","hline");
 
+
+
 		var link = canvas.selectAll("link-line")
 					.data(concepts)
 					.enter()
@@ -156,14 +168,15 @@
 						.attr("y1",function(d,i){return (d.y1*(100));})
 						.attr("x2",function(d,i){return ((d.x2-1880)*10)+10+60;})
 						.attr("y2",function(d,i){return (d.y2*(100));})
-						.attr("stroke", function(d) { 
+						.attr("stroke", 'grey')
+						/*.attr("stroke", function(d) { 
 							if (d.c=="Psych Time") 
 								{return '#7B1430';}
 							else if (d.c=="Currency Time")
 								{return '#063B45';} 
-							else {return '#009164';} })
-						.attr("stroke-width","2")
-						.attr("stroke-dasharray","5,1")
+							else {return '#009164';} })*/
+						.attr("stroke-width","1")
+						.attr("stroke-dasharray","2,1")
 						.attr("class","link-line");
 
 		
@@ -174,26 +187,31 @@
 		focus.append("circle")
 			 .attr("r",5);
 
-		var fo = focus.attr("cx",100)
-						 .attr("cy",100);
 
-		var circles = canvas.selectAll("circle")
+		var deeppink='#9A3753'
+		var cream1='#FCF1E5'
+		var green1='00A664'
+
+		var circles = canvas.selectAll("nodes")
 					.data(dataArray)
 					.enter()
 						.append("circle")
-						.attr("fill", 'beige')
-						/*.attr("fill", function(d) { 
+						/*.attr("fill", 'beige')*/
+						.attr("stroke", deeppink)
+
+							/*function(d) { 
 							if (d.c=="Psych Time") 
-								{return '#7B1430';}
+								{return '#7B1430' deeppink;}
 							else if (d.c=="Currency Time")
 								{return '#063B45';} 
-							else {return '#009164';}
-						})*/
+							else {return '#009164';} })*/
+						
 						.attr("r", 8)
-						.attr("cx", function(d) { return ((d.x-1880)*10)+10+60})
-						.attr("cy",function(d,i) { return (d.y*(100))})
-						.on('mouseover', function(){fo.style("display",null);})
-						.on('mouseout',function() { fo.style("display", "none");})
+						.attr("cx", function(d) { return ((d.x-1880)*10)+10+60;})
+						.attr("cy",function(d,i) { return (d.y*(100));})
+						.attr("class","nodes")
+						/*.on('mouseover', function(){focus.style("display",null);})
+						.on('mouseout',function() { focus.style("display", "none");})*/
 						/*.on('mouseover',function(d) 
 							{canvas.append("circle")
 								.attr("r",.5)
@@ -201,9 +219,6 @@
 								.attr("cy",function(d,i) { return (d.y*(100))})
 							}*/
 
-		
-
-		
 
 
 		var circlabels = canvas.selectAll("cl")
@@ -238,10 +253,6 @@
 							.attr("class","text-topic");
 
 		
-
-
-
-	
 
 	</script>
 
