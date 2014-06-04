@@ -1,1 +1,251 @@
-hello world
+<!doctype html>
+<html>
+
+<head>
+	<title> D3 Tutorial </title>
+	<script src="http://d3js.org/d3.v3.min.js"> </script> 
+</head>
+
+<style>
+	
+	body {  width:960px;
+			margin:auto;
+		    margin-top: 60px;
+			background-color: #C5D3D9;
+		}
+
+	h1 { background-color: none;
+		 opacity: .6;
+		 color:#527D91;
+		 font-family: 'Futura';
+		 font-weight: lighter;
+		 padding: 5px;
+		 width: 280px;
+		 height:60px;
+		 margin: auto;
+		 text-align: center;
+		}
+
+	
+	.sidetop { width: 600px;
+			   height:70px;
+			   padding:25px;
+			   margin: auto;
+			   text-align: center;
+			   font-family: 'Futura';
+			   font-style: italic;
+			   font-size: 14px;
+			   color:#F6E4D9;
+			   }
+	p {padding-left: 40px;}
+
+	svg { background-color: none;
+		  padding:20px;
+		  opacity:.8;
+		  margin: center;
+		  border-style: solid;
+		  border-color: white;
+		}
+	.text-date, .text-topic { font-size:10px;
+			 width: 20px;
+			 font-style: italic;
+			 font-family: 'Futura';
+			}
+
+	.cl { font-size:11px;
+		  font-family:'Futura';
+		}
+
+	.focus cirlce {
+		fill:none;
+		stroke:steelblue;
+	}
+
+</style>
+
+<body>
+
+	<header> <h1> A Timeline of Arts & Sciences </h1> </header>
+	<div class="sidetop">
+		<p> A timeline of the events, people, ideas and technical achievements that impacted our perception of time and space. 
+		</p>
+	</div>
+
+	<script>
+
+		
+
+		var dataArray = 
+
+				[{x:1913,y:6,c:"Psych Time",
+				  title:"Karl Jaspers Psychopathologie"},
+				 {x:1923,y:6,c:"Psych Time",
+				  title:"Pierre Janets Medicine Psychology"},
+
+				 {x:1893,y:1,c:"Currency Time",
+				  title:"Henry Olerich Cityless World"},
+				 {x:1890,y:4,c:"Currency Time",
+				  title:"Time Stamp Machine"},
+
+				 {x:1905,y:5,c:"Time is Relative",
+				  title:"Einsteins Relativity"},
+				 {x:1922,y:1,c:"Time is Relative",
+				  title:"James Joyce Ulysses"},
+				 {x:1883,y:5,c:"Time is Relative",
+				  title:"Ernst Mach"},
+
+
+
+				  ]
+				 
+		var concepts = 
+
+				[{x1:1913, y1:6,x2:1923,y2:6, c:"Psych Time"},
+				{x1:1893, y1:1,x2:1890,y2:4, c:"Currency Time"},
+				{x1:1905, y1:5,x2:1922,y2:1, c:"Time Relative"},
+				{x1:1883, y1:5,x2:1905,y2:5, c:"Time Relative"}	]
+		
+		var width = 900
+		var height = 650
+
+		var canvas = d3.select("body")
+					.append("svg")
+					.attr("width",width)
+					.attr("height",height);
+
+		var dates = [1880,1885,1890,1895,1900,1905,1910,1915,1920,1925,1930,1935,1940,1945,1950,1955]
+
+		var vert = canvas.selectAll("vline")
+					.data(dates)
+					.enter()
+						.append("line")
+						.attr("x1",function(d,i) 
+								{ return (i*50)+10 +60;})
+						.attr("y1",40)
+						.attr("x2",function(d,i) 
+								{ return (i*50)+10 +60;})
+						.attr("y2",height)
+						.attr("stroke",'#F6E4D9')
+						.attr("stroke-dasharray","5,1")
+						.attr("class","vline");
+		
+		var topics=[{k:1,t:"Literature"},
+					{k:2,t:"Visual Arts"},
+					{k:3,t:"Politics"},
+					{k:4,t:"Technology"},
+					{k:5,t:"Physics"},
+					{k:6,t:"Psychology"}]
+
+		var horiz = canvas.selectAll("hline")
+					 .data(topics)
+					 .enter()
+					 	.append("line")
+					 	.attr("x1",60)
+					 	.attr("y1",function(d,i) {return (i+1)*100;})
+					 	.attr("x2",width)
+					 	.attr("y2",function(d,i) {return (i+1)*100;})
+					 	.attr("stroke",'#F6E4D9')
+						.attr("stroke-dasharray","5,1")
+						.attr("class","hline");
+
+		var link = canvas.selectAll("link-line")
+					.data(concepts)
+					.enter()
+						.append("line")
+						.attr("x1",function(d,i){return ((d.x1-1880)*10)+10+60;})
+						.attr("y1",function(d,i){return (d.y1*(100));})
+						.attr("x2",function(d,i){return ((d.x2-1880)*10)+10+60;})
+						.attr("y2",function(d,i){return (d.y2*(100));})
+						.attr("stroke", function(d) { 
+							if (d.c=="Psych Time") 
+								{return '#7B1430';}
+							else if (d.c=="Currency Time")
+								{return '#063B45';} 
+							else {return '#009164';} })
+						.attr("stroke-width","2")
+						.attr("stroke-dasharray","5,1")
+						.attr("class","link-line");
+
+		
+		var focus = canvas.append("g")
+					.attr("class","focus")
+					.style("display","none");
+
+		focus.append("circle")
+			 .attr("r",5);
+
+		var fo = focus.attr("cx",100)
+						 .attr("cy",100);
+
+		var circles = canvas.selectAll("circle")
+					.data(dataArray)
+					.enter()
+						.append("circle")
+						.attr("fill", 'beige')
+						/*.attr("fill", function(d) { 
+							if (d.c=="Psych Time") 
+								{return '#7B1430';}
+							else if (d.c=="Currency Time")
+								{return '#063B45';} 
+							else {return '#009164';}
+						})*/
+						.attr("r", 8)
+						.attr("cx", function(d) { return ((d.x-1880)*10)+10+60})
+						.attr("cy",function(d,i) { return (d.y*(100))})
+						.on('mouseover', function(){fo.style("display",null);})
+						.on('mouseout',function() { fo.style("display", "none");})
+						/*.on('mouseover',function(d) 
+							{canvas.append("circle")
+								.attr("r",.5)
+								.attr("cx",function(d) { return ((d.x-1880)*10)+10+60})
+								.attr("cy",function(d,i) { return (d.y*(100))})
+							}*/
+
+		
+
+		
+
+
+		var circlabels = canvas.selectAll("cl")
+							.data(dataArray)
+							.enter()
+								.append("text")
+								.attr("x", function(d) { return ((d.x-1880)*10)+10+60;})
+								.attr("y",function(d,i) { return (d.y*(100))-10;})
+								.text(function(d,i){return d.title;})
+								.attr("class","cl");
+
+		var labels = canvas.selectAll("text-date")
+						.data(dates)
+						.enter()
+							.append("text")
+							.attr("x", function(d,i) {return (i*50)+60;})
+							.attr("y", 20)
+							.text(function(d,i){return d})
+							.attr("border-style","solid")
+							.attr("border-color","grey")
+							.attr("stroke","grey")
+							.attr("class","text-date");
+							
+		var label2 = canvas.selectAll("text-topic")
+						.data(topics)
+						.enter()
+							.append("text")
+							.attr("x", 5)
+							.attr("y", function(d,i) {return (i+1)*100;})
+							.text(function(d,i){return d.t;})
+							.attr("stroke","grey")
+							.attr("class","text-topic");
+
+		
+
+
+
+	
+
+	</script>
+
+	<footer> <p>  </p> </footer>
+</body>
+
+</html>
