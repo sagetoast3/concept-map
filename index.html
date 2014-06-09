@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.js"></script>
+  	<script src="http://d3js.org/d3.v3.js" charset="utf-8"></script>
+</head>
+
+<body ng-app="myApp" ng-init=
+	"chart= 	[{x:1913,y:6 },
+				 {x:1923,y:6},
+				 {x:1893,y:1},
+				 {x:1890,y:4},
+				 {x:1905,y:5},
+				 {x:1922,y:1},
+				 {x:1883,y:5},
+				 {x:1909,y:2},
+				 {x:1903 ,y:6},
+				 {x:1916, y:4},
+				 {x:1884, y:6},
+				 {x:1879, y:4}]">
+	<time-chart data="chart"></time-chart>
+	<button ng-click= "chart.push({x:1903,y:4})">
+
+	<script>
+		var myApp = angular.module('myApp', [ ]);
+		myApp.directive('timeChart', function() {
+			function link(scope, el, attr){
+				// constant values 
+				var width = 900;
+				var height = 650;
+				//draw the canvas
+				var canvas = d3.select(el[0])
+					.append("svg")
+					.attr("width",width)
+					.attr("height",height);
+
+			//var nodes = canvas.selectAll('circle');
+			var circles = canvas.selectAll("nodes")
+			//add the nodes 
+			scope.$watch('data', function(data) {
+				//nodes = circles.data(data)
+				nodes = circles.data(data)
+				//nodes.enter().append("circle")
+				nodes.enter().append("circle")
+					.attr("stroke",'white')						
+						.attr("r", 8)
+						.attr("cx",0)
+						.attr("cy",0)
+						.attr("cx", function(d) { return ((d.x-1880)*10)+10+60;})
+						.attr("cy",function(d,i) { return (d.y*(100));})
+						.attr("class","nodes")
+						.attr("stroke-width","2");
+					//style....
+					//attr....
+					//attr...
+
+			}, true); //scope.$watch('data', function(data))
+
+			}//function link(scope,el,attr)
+			return {
+		        link: link,
+		        restrict: 'E',
+		        scope: { data: '=' }
+      		}; //return { 
+		});//myApp.directive('timeChart',function())
+	</script>
+</body>
+</html>
