@@ -1,68 +1,387 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html ng-app="d3DemoApp">
+
 <head>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.js"></script>
-  	<script src="http://d3js.org/d3.v3.js" charset="utf-8"></script>
+	<title> Time Grid </title>
+	<script src="http://d3js.org/d3.v3.min.js"> </script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.min.js"></script> 
 </head>
 
-<body ng-app="myApp" ng-init=
-	"chart= 	[{x:1913,y:6 },
-				 {x:1923,y:6},
-				 {x:1893,y:1},
-				 {x:1890,y:4},
-				 {x:1905,y:5},
-				 {x:1922,y:1},
-				 {x:1883,y:5},
-				 {x:1909,y:2},
-				 {x:1903 ,y:6},
-				 {x:1916, y:4},
-				 {x:1884, y:6},
-				 {x:1879, y:4}]">
-	<time-chart data="chart"></time-chart>
-	<button ng-click= "chart.push({x:1903,y:4})">
+<style>
+	
+	body {  width:960px;
+			margin:auto;
+		    margin-top: 60px;
+			background-color: #C5D3D9;
+		}
 
-	<script>
-		var myApp = angular.module('myApp', [ ]);
-		myApp.directive('timeChart', function() {
-			function link(scope, el, attr){
-				// constant values 
-				var width = 900;
-				var height = 650;
-				//draw the canvas
-				var canvas = d3.select(el[0])
+	h1 { background-color: none;
+		 opacity: .6;
+		 color:#527D91;
+		 font-family: 'Futura';
+		 font-weight: lighter;
+		 padding: 5px;
+		 width: 280px;
+		 height:60px;
+		 margin: auto;
+		 text-align: center;
+		}
+
+	form { text-align: left;
+		opacity: .6;
+	 		color:#527D91;
+		 font-family: 'Futura';
+		 font-weight: lighter;
+		 padding-bottom: 30px;
+		}
+
+	
+	.sidetop { width: 600px;
+			   height:70px;
+			   padding:25px;
+			   margin: auto;
+			   text-align: center;
+			   font-family: 'Futura';
+			   font-style: italic;
+			   font-size: 14px;
+			   color:#F6E4D9;
+			   }
+	p {padding-left: 40px;
+	   }
+
+	svg { background-color: none;
+		  padding:20px;
+		  opacity:.8;
+		  margin: center;
+		  border-style: solid;
+		  border-color: white;
+		}
+	.text-date, .text-topic { font-size:10px;
+			 width: 20px;
+			 font-style: italic;
+			 font-family: 'Futura';
+			}
+
+	.cl  { font-size:11px;
+		  font-family:'Futura';
+		  opacity: 0;
+		}
+
+	
+
+	.nodes {fill:#FF908B;
+			}
+	.nodes:hover {fill:magenta;
+				  transition-duration:.3s;}
+
+
+
+</style>
+
+<body ng-controller="AppCtrl">
+	<header> <h1> A Timeline of Arts & Sciences </h1> 
+	<div class="sidetop">
+		<p> A timeline of the events, people, ideas and technical achievements that impacted our perception of time and space. 
+		</p>
+	</div>
+	
+	<!--forms-->
+	<!-- Create new node: Title, Topic, Date, Description, Conceptual links to ...other nodes?-->
+	<div class="formsection">
+		<form ng-submit="addNode()" > 
+		 Title:  <input ng-model="title" type ="text">
+		 Date:  <input ng-model="date" type ="text">
+		 Topic:  <input ng-model="topic" type ="text">
+		 Link: <input ng-model="link" type="text">
+		 <input type="submit" value="add node!">
+		</form>
+		
+
+	</div>
+	</header>
+
+    <hello-world val='data'></hello-world>
+  
+ 	<script>
+    	var d3DemoApp = angular.module('d3DemoApp', []);
+    	
+
+    	d3DemoApp.controller('AppCtrl', function AppCtrl ($scope) {
+      	
+      		
+		
+		$scope.addNode = function(){
+
+		var data = 
+
+				[{x:1913,y:6,c:"Psych Time",
+				  title:"Karl Jaspers Psychopathologie"},
+
+				 {x:1923,y:6,c:"Psych Time",
+				  title:"Janets Medicine Psychology"},
+
+				 {x:1893,y:1,c:"Currency Time",
+				  title:"Henry Olerich Cityless World"},
+
+				 {x:1890,y:4,c:"Currency Time",
+				  title:"Time Stamp Machine"},
+
+				 {x:1905,y:5,c:"Time is Relative",
+				  title:"Einsteins Relativity"},
+
+				 {x:1922,y:1,c:"Time is Relative",
+				  title:"James Joyce Ulysses"},
+
+				 {x:1883,y:5,c:"Time is Relative",
+				  title:"Ernst Mach"},
+
+				 {x:1909,y:2,c:"The Past",
+				  title:"Filippo Marinetti"},
+
+				 {x:1903 ,y:6,c:"Social Time",
+				  title:"Primitive Classification"},
+
+				 {x:1916, y:4, c:"Time is Fluid",
+				  title:"Invention of modern clock with fluid hand movement"},
+
+				 {x:1884, y:6, c:"Consciousness as Stream",
+				  title:"William James coins term 'Stream of Thought'"},
+
+				 {x:1879, y:4, c:"Time Distinctions eliminated",
+				  title:"Thomas Edisons incandescent lamp"}
+
+				  ];
+
+		data.push({x:$scope.date,y:$scope.topic,c:$scope.link,
+				  title:$scope.title});
+		}
+
+	}); //demo app controller
+
+
+
+	/*myApp.directive('helloWorld', function($scope) {*/
+    		/*function link(scope, el, attr){*/
+        	//d3 code // 
+
+    d3DemoApp.directive('helloWorld', function() {
+
+    	// values
+		var width = 900;
+		var height = 650;
+
+		var concepts = 
+
+				[
+				{x1:1913, y1:6,x2:1923,y2:6, c:"Psych Time"},
+				{x1:1893, y1:1,x2:1890,y2:4, c:"Currency Time"},
+				{x1:1905, y1:5,x2:1922,y2:1, c:"Time Relative"},
+				{x1:1883, y1:5,x2:1905,y2:5, c:"Time Relative"},
+				{x1:1909, y1:2,x2:1922,y2:1, c:"The Past"}	
+
+				];
+
+
+
+		return {
+        restrict: 'E',
+        scope: {val:'='},
+        link: function(scope, el, attrs) {
+
+		var canvas = d3.select(el[0])
 					.append("svg")
 					.attr("width",width)
 					.attr("height",height);
 
-			//var nodes = canvas.selectAll('circle');
-			var circles = canvas.selectAll("nodes")
-			//add the nodes 
-			scope.$watch('data', function(data) {
-				//nodes = circles.data(data)
-				nodes = circles.data(data)
-				//nodes.enter().append("circle")
-				nodes.enter().append("circle")
-					.attr("stroke",'white')						
+
+
+		var dates = [1880,1885,1890,1895,1900,1905,1910,1915,1920,1925,1930,1935,1940,1945,1950,1955];
+
+		
+		
+
+		var vert = canvas.selectAll("vline")
+					.data(dates)
+					.enter()
+						.append("line")
+						.attr("x1",function(d,i) 
+								{ return (i*50)+10 +60;})
+						.attr("y1",40)
+						.attr("x2",function(d,i) 
+								{ return (i*50)+10 +60;})
+						.attr("y2",height)
+						.attr("stroke",'#F6E4D9')
+						.attr("opacity",.4)
+						.attr("stroke-dasharray","5,1")
+						.attr("class","vline");
+
+
+		
+		var topics=[{k:1,t:"Literature"},
+					{k:2,t:"Visual Arts"},
+					{k:3,t:"Politics"},
+					{k:4,t:"Technology"},
+					{k:5,t:"Physics"},
+					{k:6,t:"Psychology"}]
+
+		var horiz = canvas.selectAll("hline")
+					 .data(topics)
+					 .enter()
+					 	.append("line")
+					 	.attr("x1",60)
+					 	.attr("y1",function(d,i) {return (i+1)*100;})
+					 	.attr("x2",width)
+					 	.attr("y2",function(d,i) {return (i+1)*100;})
+					 	.attr("stroke",'#F6E4D9')
+					 	.attr("opacity",.4)
+						.attr("stroke-dasharray","5,1")
+						.attr("class","hline");
+
+
+	scope.$watch('val', function(newVal, oldVal) {
+
+		var data = 
+
+				[{x:1913,y:6,c:"Psych Time",
+				  title:"Karl Jaspers Psychopathologie"},
+
+				 {x:1923,y:6,c:"Psych Time",
+				  title:"Janets Medicine Psychology"},
+
+				 {x:1893,y:1,c:"Currency Time",
+				  title:"Henry Olerich Cityless World"},
+
+				 {x:1890,y:4,c:"Currency Time",
+				  title:"Time Stamp Machine"},
+
+				 {x:1905,y:5,c:"Time is Relative",
+				  title:"Einsteins Relativity"},
+
+				 {x:1922,y:1,c:"Time is Relative",
+				  title:"James Joyce Ulysses"},
+
+				 {x:1883,y:5,c:"Time is Relative",
+				  title:"Ernst Mach"},
+
+				 {x:1909,y:2,c:"The Past",
+				  title:"Filippo Marinetti"},
+
+				 {x:1903 ,y:6,c:"Social Time",
+				  title:"Primitive Classification"},
+
+				 {x:1916, y:4, c:"Time is Fluid",
+				  title:"Invention of modern clock with fluid hand movement"},
+
+				 {x:1884, y:6, c:"Consciousness as Stream",
+				  title:"William James coins term 'Stream of Thought'"},
+
+				 {x:1879, y:4, c:"Time Distinctions eliminated",
+				  title:"Thomas Edisons incandescent lamp"}
+
+				  ];
+
+		var link = canvas.selectAll("link-line")
+					.data(concepts)
+					.enter()
+						.append("line")
+						.attr("x1",function(d,i){return ((d.x1-1880)*10)+10+60;})
+						.attr("y1",function(d,i){return (d.y1*(100));})
+							.attr("x2",function(d,i){return ((d.x2-1880)*10)+10+60;})
+							.attr("y2",function(d,i){return (d.y2*(100));})
+							.attr("stroke", 'white')
+							/*.attr("stroke", function(d) { 
+								if (d.c=="Psych Time") 
+									{return '#7B1430';}
+								else if (d.c=="Currency Time")
+									{return '#063B45';} 
+								else {return '#009164';} })*/
+							.attr("stroke-width","2")
+							/*.attr("stroke-dasharray","2,1")*/
+							.attr("class","link-line");
+
+		
+
+
+		var deeppink='#9A3753'
+		var cream1='#FCF1E5'
+		var green1='00A664'
+
+		var tooltip= d3.select("header").append("text")
+					.style("position", "absolute")
+					.style("top",123)
+					/*.style("z-index", "10")*/
+					.style("visibility", "hidden");
+					/*.text("a simple tolltip");*/
+
+		var reveal = d3.select("cl")
+					.style("opacity",1);
+
+
+
+		var circles = canvas.selectAll("nodes")
+					.data(data)
+					.enter()
+						.append("circle")
+						/*.attr("fill", 'beige')*/
+						.attr("stroke",'white')						
 						.attr("r", 8)
 						.attr("cx",0)
 						.attr("cy",0)
 						.attr("cx", function(d) { return ((d.x-1880)*10)+10+60;})
 						.attr("cy",function(d,i) { return (d.y*(100));})
 						.attr("class","nodes")
-						.attr("stroke-width","2");
-					//style....
-					//attr....
-					//attr...
+						.attr("stroke-width","2")
+						.on("mouseover", function(d) {return reveal;});
+						/*.on("mouseover", function(d){return tooltip.style("visibility","visible")
+													.text("Date:"+d.x + " Title:" + d.title)
+													.attr("class","mouse");})
+													
+						.on("mouseout", function(d){return tooltip.style("visibility","hidden");}) */
+						
+					
 
-			}, true); //scope.$watch('data', function(data))
 
-			}//function link(scope,el,attr)
-			return {
-		        link: link,
-		        restrict: 'E',
-		        scope: { data: '=' }
-      		}; //return { 
-		});//myApp.directive('timeChart',function())
-	</script>
+		var circlabels = canvas.selectAll("cl")
+							.data(data)
+							.enter()
+								.append("text")
+								.attr("x", function(d) { return ((d.x-1880)*10)+10+60;})
+								.attr("y",function(d,i) { return (d.y*(100))-10;})
+								.text(function(d,i){return d.title;})
+								.attr("class","cl");
+
+		var labels = canvas.selectAll("text-date")
+						.data(dates)
+						.enter()
+							.append("text")
+							.attr("x", function(d,i) {return (i*50)+60;})
+							.attr("y", 20)
+							.text(function(d,i){return d})
+							.attr("border-style","solid")
+							.attr("border-color","grey")
+							.attr("stroke","grey")
+							.attr("class","text-date");
+							
+		var label2 = canvas.selectAll("text-topic")
+						.data(topics)
+						.enter()
+							.append("text")
+							.attr("x", 5)
+							.attr("y", function(d,i) {return (i+1)*100;})
+							.text(function(d,i){return d.t;})
+							.attr("stroke","grey")
+							.attr("class","text-topic");
+
+      }) //scope watch
+      ;} //link function
+  };
+});
+
+  </script>
+
+
+
+	<footer> <p>  </p> </footer>
 </body>
+
 </html>
