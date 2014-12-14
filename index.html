@@ -350,8 +350,11 @@
 			.attr("font-size", 8)
 			.attr("opacity",0)
 			.attr("fill", "grey")
-			.attr("font-family", 'Futura'); 
-
+			.attr("font-family", 'Futura') 
+			.transition()
+				.delay(4000)
+				.duration(8000)
+				.attr("opacity", 1);
 	
 	
 
