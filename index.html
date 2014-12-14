@@ -148,9 +148,12 @@
 								{ return (i*50)+10 +60;})
 						.attr("x2",height)
 						.attr("stroke",'#43AAFF')
-						.attr("opacity",.2)
+						.attr("opacity",0)
 						.attr("stroke-dasharray","5,1")
-						.attr("class","vline");
+						.attr("class","vline")
+						.transition()
+      								.delay(4000)
+      								.attr("opacity",1);
 
 	var horiz = canvas.selectAll("hline")
 					 .data(topics)
@@ -161,9 +164,12 @@
 					 	.attr("y2",width)
 					 	.attr("x2",function(d,i) {return (i+1)*100;})
 					 	.attr("stroke",'#43AAFF')
-					 	.attr("opacity",.2)
+					 	.attr("opacity",0)
 						.attr("stroke-dasharray","5,1")
 						.attr("class","hline");
+						.transition()
+      								.delay(4000)
+      								.attr("opacity",.2);
 
 	var labels = canvas.selectAll("text-date")
 						.data(dates)
@@ -173,6 +179,9 @@
 							.attr("x", 20)
 							.text(function(d,i){return d})
 							.attr("class","text-date");
+							.transition()
+      								.delay(4000)
+      								.attr("opacity",1);
 							
 	var label2 = canvas.selectAll("text-topic")
 						.data(topics)
@@ -182,6 +191,9 @@
 							.attr("x", function(d,i) {return (i+1)*100;})
 							.text(function(d,i){return d;})
 							.attr("class","text-topic");
+							.transition()
+      								.delay(4000)
+      								.attr("opacity",1);
 
 
 
@@ -265,6 +277,7 @@
       		.attr("stroke-dasharray", totalLength + " " + totalLength)
       		.attr("stroke-dashoffset", totalLength)
       		.transition()
+      			.delay(4000)
         		.duration(8000)
         		.ease("linear")
         		.attr("stroke-dashoffset", 0);}
@@ -299,8 +312,12 @@
 						.attr("cy", function(d) { return 10*(d.yr -1850);})
 						.attr("cx",function(d,i) { return (d.n)*100;})
 						.attr("class","nodes")
+						.attr("opacity", 0)
 						.attr("id", function(d) {return d.title;})
-						;
+						.transition()
+      								.delay(4000)
+      								.attr("opacity",1);
+						
 
 	$('svg circle').tipsy({
 		gravity:'w',
@@ -333,6 +350,7 @@
 			.attr("class","node-labels")
 			.text(function(d) {return d.title;})
 			.attr("font-size", 8)
+			.attr("opacity",0)
 			.attr("fill", "grey")
 			.attr("font-family", 'Futura'); 
 
