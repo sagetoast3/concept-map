@@ -153,7 +153,8 @@
 						.attr("class","vline")
 						.transition()
       								.delay(4000)
-      								.attr("opacity",1);
+      								.duration(8000)
+      								.attr("opacity",.2);
 
 	var horiz = canvas.selectAll("hline")
 					 .data(topics)
@@ -169,6 +170,7 @@
 						.attr("class","hline")
 						.transition()
       								.delay(4000)
+      								.duration(8000)
       								.attr("opacity",.2);
 
 	var labels = canvas.selectAll("text-date")
@@ -181,6 +183,7 @@
 							.attr("class","text-date")
 							.transition()
       								.delay(4000)
+      								.duration(8000)
       								.attr("opacity",1);
 							
 	var label2 = canvas.selectAll("text-topic")
@@ -193,6 +196,7 @@
 							.attr("class","text-topic")
 							.transition()
       								.delay(4000)
+      								.duration(8000)
       								.attr("opacity",1);
 
 
