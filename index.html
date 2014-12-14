@@ -338,13 +338,9 @@
 			.attr("class","node-labels")
 			.text(function(d) {return d.title;})
 			.attr("font-size", 8)
-			.attr("opacity",0)
+			.attr("opacity",.8)
 			.attr("fill", "grey")
-			.attr("font-family", 'Futura') 
-			.transition()
-				.delay(4000)
-				.duration(8000)
-				.attr("opacity", 1);
+			.attr("font-family", 'Futura');
 	
 	
 
