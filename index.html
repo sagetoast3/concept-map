@@ -173,11 +173,8 @@
 							.attr("y", function(d,i) {return (i*50)+60;})
 							.attr("x", 20)
 							.text(function(d,i){return d})
-							.attr("class","text-date")
-							.transition()
-      								.delay(4000)
-      								.duration(8000)
-      								.attr("opacity",1);
+							.attr("class","text-date");
+							
 							
 	var label2 = canvas.selectAll("text-topic")
 						.data(topics)
@@ -186,11 +183,8 @@
 							.attr("y", 10)
 							.attr("x", function(d,i) {return (i+1)*100;})
 							.text(function(d,i){return d;})
-							.attr("class","text-topic")
-							.transition()
-      								.delay(4000)
-      								.duration(8000)
-      								.attr("opacity",1);
+							.attr("class","text-topic");
+							
 
 
 
@@ -309,12 +303,8 @@
 						.attr("cy", function(d) { return 10*(d.yr -1850);})
 						.attr("cx",function(d,i) { return (d.n)*100;})
 						.attr("class","nodes")
-						.attr("opacity", 0)
-						.attr("id", function(d) {return d.title;})
-						.transition()
-      								.delay(4000)
-      								.duration(8000)
-      								.attr("opacity",1);
+						.attr("opacity", 1)
+						.attr("id", function(d) {return d.title;});
 						
 
 	$('svg circle').tipsy({
