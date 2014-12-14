@@ -148,13 +148,9 @@
 								{ return (i*50)+10 +60;})
 						.attr("x2",height)
 						.attr("stroke",'#43AAFF')
-						.attr("opacity",0)
+						.attr("opacity",0.2)
 						.attr("stroke-dasharray","5,1")
-						.attr("class","vline")
-						.transition()
-      								.delay(4000)
-      								.duration(8000)
-      								.attr("opacity",.2);
+						.attr("class","vline");
 
 	var horiz = canvas.selectAll("hline")
 					 .data(topics)
@@ -165,13 +161,10 @@
 					 	.attr("y2",width)
 					 	.attr("x2",function(d,i) {return (i+1)*100;})
 					 	.attr("stroke",'#43AAFF')
-					 	.attr("opacity",0)
+					 	.attr("opacity",.2)
 						.attr("stroke-dasharray","5,1")
-						.attr("class","hline")
-						.transition()
-      								.delay(4000)
-      								.duration(8000)
-      								.attr("opacity",.2);
+						.attr("class","hline");
+						
 
 	var labels = canvas.selectAll("text-date")
 						.data(dates)
@@ -320,6 +313,7 @@
 						.attr("id", function(d) {return d.title;})
 						.transition()
       								.delay(4000)
+      								.duration(8000)
       								.attr("opacity",1);
 						
 
