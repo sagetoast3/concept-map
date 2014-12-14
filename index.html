@@ -166,7 +166,7 @@
 					 	.attr("stroke",'#43AAFF')
 					 	.attr("opacity",0)
 						.attr("stroke-dasharray","5,1")
-						.attr("class","hline");
+						.attr("class","hline")
 						.transition()
       								.delay(4000)
       								.attr("opacity",.2);
@@ -178,7 +178,7 @@
 							.attr("y", function(d,i) {return (i*50)+60;})
 							.attr("x", 20)
 							.text(function(d,i){return d})
-							.attr("class","text-date");
+							.attr("class","text-date")
 							.transition()
       								.delay(4000)
       								.attr("opacity",1);
@@ -190,7 +190,7 @@
 							.attr("y", 10)
 							.attr("x", function(d,i) {return (i+1)*100;})
 							.text(function(d,i){return d;})
-							.attr("class","text-topic");
+							.attr("class","text-topic")
 							.transition()
       								.delay(4000)
       								.attr("opacity",1);
