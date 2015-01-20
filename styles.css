@@ -1,0 +1,121 @@
+
+#mid {
+	margin: auto;
+	width:1000px;
+}
+
+#column1 {
+	width: 650px;
+	float:left;
+}
+
+#column2 {
+	width: 300px;
+	float:left;
+	padding-left: 5px;
+}
+
+body {  width:1060px;
+		margin:auto;
+	    margin-top: 60px;
+		background-color: #2F2F30;
+
+	}
+
+p { font-size:11px;
+	  font-family:'Futura';
+	  color: 'grey';
+	  opacity:.5;}
+
+h1 { background-color: none;
+	 opacity: .6;
+	 color:  #527D91;
+	 font-family: 'Futura';
+	 font-weight: lighter;
+	 padding: 5px;
+	 width: 500px;
+	 height:40px;
+	 margin: auto;
+	 text-align: center;
+	}
+h2 { background-color: none;
+	 opacity: .6;
+	 color:  #527D91;
+	 font-family: 'Futura';
+	 font-weight: lighter;
+	 padding: 5px;
+	 width: 500px;
+	 height:40px;
+	 margin: auto;
+	 text-align: center;
+	}
+
+h3 {
+	font-family: 'Futura';
+	font-weight: lighter;
+	color:grey;
+}
+
+form { text-align: left;
+	opacity: .6;
+ 		color:#527D91;
+	 font-family: 'Futura';
+	 font-weight: lighter;
+	 padding-bottom: 30px;
+	}
+
+
+.sidetop { width: 600px;
+		   height:70px;
+		   padding:25px;
+		   margin: auto;
+		   text-align: center;
+		   font-family: 'Futura';
+		   font-style: italic;
+		   font-size: 14px;
+		   color:#F6E4D9;
+		   }
+
+
+svg { background-color: none;
+	  padding:20px;
+	  opacity:.8;
+	  float:left;
+	   
+	}
+
+.box {
+	border-color: grey;
+	  padding:1px;
+	  opacity:.2;
+	  margin:2px;
+	  color: white;
+
+	}
+
+.box:hover {
+	background-color: none;
+	color:grey;
+}
+
+
+.text-date, .text-topic { font-size:10px;
+		 width: 10px;
+		 font-style: italic;
+		 font-weight: lighter;
+		 font-family: 'Futura';
+		 fill: #527D91;
+		}
+
+.cl  { font-size:11px;
+	  font-family:'Futura';
+	  opacity: 0;
+	}
+
+.nodes {fill: #D6D6E5 ;
+		stroke:none;		
+		}
+
+.nodes:hover {fill:'magenta';
+			  transition-duration:.3s;}
+
