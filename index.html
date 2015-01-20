@@ -4,348 +4,66 @@
 
 <body>
 
+	<head> 
+		<title> Time Grid </title>
+		<script type="text/javascript" src="http://mbostock.github.com/d3/d3.js"></script>
+	    <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.min.js"></script> 
+	    <script type="text/javascript" src="jquery.tipsy.js"></script>
+	    <link href="styles.css" rel="stylesheet" type="text/css" />
+	    <link href="tipsy.css" rel="stylesheet" type="text/css" />
+	    <script src="time.js"></script>
+	</head>
 
-<head> 
-	<title> Time Grid </title>
-	<script type="text/javascript" src="http://mbostock.github.com/d3/d3.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.min.js"></script> 
-    <script type="text/javascript" src="jquery.tipsy.js"></script>
-    <link href="tipsy.css" rel="stylesheet" type="text/css" />
-</head>
+	<header> <h1> A Conceptual Roadmap </h1>
+			<h2> "The Culture of Time & Space" </h2> 
+		<div class="sidetop">
+			<p class="tex"> A timeline of the events, people, ideas and technical achievements that impacted our perception of time and space. 
+			</p>
+		</div>
+	</header>
 
-<header> <h1> A Conceptual Roadmap </h1>
-		<h2> "The Culture of Time & Space" </h2> 
-	<div class="sidetop">
-		<p class="tex"> A timeline of the events, people, ideas and technical achievements that impacted our perception of time and space. 
-		</p>
-		<!--background #C5D3D9 -->
+	<div id="mid">
+
+		<div id="column1"> 
+			<div id="something"></div>
+		</div>
+
+		<div id="column2"> 
+			<h3 class="hea"> Conceptual Links </h3>
+			<div class="box">
+				<p> Simultaneity </p>
+			</div>
+			<div class="box">
+				<p> Negative Space </p>
+			</div>
+			<div class="box">
+				<p> Homogenous vs. Heterogenous Time </p>
+			</div>
+			<div class="box">
+				<p> Atomistic vs. Continuous Time </p>
+			</div>
+			<div class="box">
+				<p> Age of the world </p>
+			</div>
+			<div class="box">
+				<p> Influence of the Past on the Present </p>
+			</div>
+			<div class="box">
+				<p> Value of the past </p>
+			</div>
+			<div class="box">
+				<p> Personal vs. Historical Past </p>
+			</div>
+			<div class="box">
+				<p> Sequence vs. Simultaneouty</p>
+			</div>
+			<div class="box">
+				<p> Imagined Future </p>
+			</div>
+		
+		</div>
+
 	</div>
-</header>
-
-<style>
-	
-	body {  width:960px;
-			margin:auto;
-		    margin-top: 60px;
-			background-color: #2F2F30;
-
-		}
-
-	.tex { font-size:11px;
-		  font-family:'Futura';
-		  color:grey;
-		  opacity:.5;}
-
-	h1 { background-color: none;
-		 opacity: .6;
-		 color:  #527D91;
-		 font-family: 'Futura';
-		 font-weight: lighter;
-		 padding: 5px;
-		 width: 500px;
-		 height:40px;
-		 margin: auto;
-		 text-align: center;
-		}
-	h2 { background-color: none;
-		 opacity: .6;
-		 color:  #527D91;
-		 font-family: 'Futura';
-		 font-weight: lighter;
-		 padding: 5px;
-		 width: 500px;
-		 height:40px;
-		 margin: auto;
-		 text-align: center;
-		}
-
-	form { text-align: left;
-		opacity: .6;
-	 		color:#527D91;
-		 font-family: 'Futura';
-		 font-weight: lighter;
-		 padding-bottom: 30px;
-		}
-
-
-	
-	.sidetop { width: 600px;
-			   height:70px;
-			   padding:25px;
-			   margin: auto;
-			   text-align: center;
-			   font-family: 'Futura';
-			   font-style: italic;
-			   font-size: 14px;
-			   color:#F6E4D9;
-			   }
-
-
-	svg { background-color: none;
-		  padding:20px;
-		  opacity:.8;
-		  margin: center;
-		  border-style: solid;
-		  border-color: #527D91;
-		}
-	.text-date, .text-topic { font-size:10px;
-			 width: 10px;
-			 font-style: italic;
-			 font-weight: lighter;
-			 font-family: 'Futura';
-			 fill: #527D91;
-			}
-
-	.cl  { font-size:11px;
-		  font-family:'Futura';
-		  opacity: 0;
-		}
-
-	
-
-	.nodes {fill: #D6D6E5 ;
-			stroke:none;
-			
-			
-			}
-	.nodes:hover {fill:'magenta';
-				  transition-duration:.3s;}
-
-
-
-</style>
-
-<script  type="text/javascript">
-
-
- d3.json("timenodes.json", function(data){
-
- 	//constants 
- 	var width = 900;
- 	var height = 950;
-
- 	var concepts = [];
-
- 	var canvas = d3.select("body")
- 				.append("svg")
- 				.attr("width", width)
- 				.attr("height", height);
- 	
-
- 	//labeling and drawing axes and grid
-	var dates = [1855,1860,1865,1870,1875,1880,1885,1890,1895,1900,1905,1910,1915,1920,1925,1930,1935,1940,1945,1950,1955]; 	
-
-	var topics = ["Technology","Literature","Culture","Music","Psychology","Sciences","Visual Arts"];
-
- 	var vert = canvas.selectAll("vline")
-					.data(dates)
-					.enter()
-						.append("line")
-						.attr("y1",function(d,i) 
-								{ return (i*50)+10 +60;})
-						.attr("x1",40)
-						.attr("y2",function(d,i) 
-								{ return (i*50)+10 +60;})
-						.attr("x2",height)
-						.attr("stroke",'#43AAFF')
-						.attr("opacity",0.2)
-						.attr("stroke-dasharray","5,1")
-						.attr("class","vline");
-
-	var horiz = canvas.selectAll("hline")
-					 .data(topics)
-					 .enter()
-					 	.append("line")
-					 	.attr("y1",60)
-					 	.attr("x1",function(d,i) {return (i+1)*100;})
-					 	.attr("y2",width)
-					 	.attr("x2",function(d,i) {return (i+1)*100;})
-					 	.attr("stroke",'#43AAFF')
-					 	.attr("opacity",.2)
-						.attr("stroke-dasharray","5,1")
-						.attr("class","hline");
-						
-
-	var labels = canvas.selectAll("text-date")
-						.data(dates)
-						.enter()
-							.append("text")
-							.attr("y", function(d,i) {return (i*50)+60;})
-							.attr("x", 20)
-							.text(function(d,i){return d})
-							.attr("class","text-date");
-							
-							
-	var label2 = canvas.selectAll("text-topic")
-						.data(topics)
-						.enter()
-							.append("text")
-							.attr("y", 10)
-							.attr("x", function(d,i) {return (i+1)*100;})
-							.text(function(d,i){return d;})
-							.attr("class","text-topic");
-							
-
-
-
- 	//conceptual links
-
-	var simulataneity = 
-
-	[ {title: "Madame Bovary", x:1857, y:2},
-	  {title: "Telephone Invented", x:1876, y:1 },
-	  {title: "Cinema Invented", x:1893, y:1 },
-	  {title: "The Octopus", x:1901, y:2},
-	  {title: "Death of a Nobody", x:1908, y:2},
-	  {title: "Le Sacre du Printemps", x:1913,y:4 },	  
-	  {title: "Ulysses", x:1922, y:2}
-
-	];
-
-	var heterspace =
-
-	[
-		{title: "Chronophotography", x:1867 ,y:1 },
-		{title: "Nietzche's Perspectivism", x:1887, y:3},
-		{title: "Cinema Invented", x:1893, y:1 },
-		{title: "Picasso's 'Les Demoiselles d'Avignon'", x:1907, y:7},
-		{title: "Essay on Cubism", x:1912, y:7}
-
-	];
-
-	var posnegspace = 
-
-	[
-		{title: "H.G. Well's Time Traveller", x:1895 ,y:2},
-		{title: "Thomson's Corpuscles(electrons)" ,x:1897, y:6}
-	]
-	
-	
-
-	var standardtime = 
-
-	[
-		{title: "Time Signals First Transmitted by Telegraph", x:1852, y:1},
-		{title: "The Day of Two Noons", x:1883, y:3},
-		{title: "Sanford Fleming proposed worldwide time zones", x:1879, y:6}
-
-	]
-
-	var publictime = 
-
-	[
-		{title: "Remembrance of Things Past", x:1909, y:2},
-		{title: "The Metamorphosis", x:1915, y:2}
-
-	]
-
-	
-
-	function lines(name, color) {
-
-		var line = d3.svg.line()
-		.y(function(d) { return 10*(d.x -1850);})
-		.x(function(d,i) {return (d.y)*100;})
-		.interpolate("cardinal");
-
-
-		var path = canvas.selectAll("name")
-			.data([name])
-			.enter()
-			.append("path")
-				.attr("d", line)
-				.attr("fill", "none")
-				.attr("stroke", color)
-				.attr("stroke-width",1)
-						//function(name) {
-						//if (name == simulataneity) {'#2397C9';} 
-						//else {'#FEA2A1';};})
-				.attr("class", name);
-
-		var totalLength = path.node().getTotalLength();
-
-		path
-      		.attr("stroke-dasharray", totalLength + " " + totalLength)
-      		.attr("stroke-dashoffset", totalLength)
-      		.transition()
-        		.duration(8000)
-        		.ease("linear")
-        		.attr("stroke-dashoffset", 0);}
-
-    var igreen = '#6ECE8B';
-    var iblue = '#ADD8E6';
-    var imauve = '#D67B8F';
-    var ilav = '#DAA1FF';
-    var iorange = '#FFC25F';
-
-
-	lines(simulataneity, igreen);
-	lines(heterspace, imauve);
-	lines(posnegspace, ilav);
-	lines(standardtime, iblue);
-	lines(publictime, iorange);
-
-
- 	//plot nodes
-
- 	var start = 1880;
- 	var scale = 10;
- 	var pad = 60;
- 	var yspace = 100;
-
- 	var circles = canvas.selectAll("nodes")
-					.data(data)
-					.enter()
-						.append("svg:circle")
-						/*.attr("fill", 'beige')*/						
-						.attr("r", 5)
-						.attr("cy", function(d) { return 10*(d.yr -1850);})
-						.attr("cx",function(d,i) { return (d.n)*100;})
-						.attr("class","nodes")
-						.attr("opacity", 1)
-						.attr("id", function(d) {return d.title;});
-						
-
-	$('svg circle').tipsy({
-		gravity:'w',
-		html: true,
-		title: function() {
-			var d = this.__data__, c = d.title ;
-			return  c ;
-		}
-	});
-
-						
-	//function label() { canvas.selectAll("text")
-
-	/*circles.selectAll("nodes")
-		.append("text")
-		.data(data)
-		.enter()
-			.append("text")
-			.text(function(d) {return d.title;})
-			.attr("font-size", 8)
-			.attr("fill", "grey")
-			.attr("font-family", 'Futura'); */
-
-	canvas.selectAll("node-labels")
-		.data(data)
-		.enter()
-			.append("text")
-			.attr("y", function(d) { return 10*(d.yr -1850);})
-			.attr("x",function(d,i) { return (d.n)*100 +5;})
-			.attr("class","node-labels")
-			.text(function(d) {return d.title;})
-			.attr("font-size", 8)
-			.attr("opacity",.8)
-			.attr("fill", "grey")
-			.attr("font-family", 'Futura');
-	
-	
-
-
-	})
-</script>
 
 </body>
 </html>
